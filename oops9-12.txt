@@ -1,0 +1,315 @@
+import java.util.Scanner;
+
+public class MovieTicketBooking {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int availableSeats = 120;
+        int choice;
+
+        do {
+            System.out.println("\n===== MOVIE TICKET MENU =====");
+            System.out.println("1. Book Tickets");
+            System.out.println("2. Cancel Tickets");
+            System.out.println("3. Check Availability");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter number of tickets to book: ");
+                    int book = sc.nextInt();
+
+                    if (book <= 0) {
+                        System.out.println("Invalid number of tickets.");
+                    }
+                    else if (book > availableSeats) {
+                        System.out.println("Booking failed. Not enough seats available.");
+                    }
+                    else {
+                        availableSeats -= book;
+                        System.out.println("Tickets booked successfully.");
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Enter number of tickets to cancel: ");
+                    int cancel = sc.nextInt();
+
+                    if (cancel <= 0) {
+                        System.out.println("Invalid number of tickets.");
+                    }
+                    else if (availableSeats + cancel > 120) {
+                        System.out.println("Cancellation failed. Invalid number of tickets.");
+                    }
+                    else {
+                        availableSeats += cancel;
+                        System.out.println("Ticket cancellation successful.");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Available Seats: " + availableSeats);
+                    break;
+
+                case 4:
+                    System.out.println("Thank you for using the Movie Ticket Booking System.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q2
+
+class Product {
+
+    protected String productName;
+    protected String productId;
+    protected double price;
+
+    Product(String productName, String productId, double price) {
+        this.productName = productName;
+        this.productId = productId;
+        this.price = price;
+    }
+
+    void displayDetails() {
+        System.out.println("Product Name : " + productName);
+        System.out.println("Product ID   : " + productId);
+        System.out.println("Price        : " + price);
+    }
+}
+
+
+class ElectronicsProduct extends Product {
+
+    private int warranty;
+
+    ElectronicsProduct(String productName, String productId,
+                       double price, int warranty) {
+
+        super(productName, productId, price);
+        this.warranty = warranty;
+    }
+
+    @Override
+    void displayDetails() {
+
+        System.out.println("===== ELECTRONICS PRODUCT =====");
+
+        System.out.println("Product Name : " + productName);
+        System.out.println("Product ID   : " + productId);
+        System.out.println("Price        : " + price);
+        System.out.println("Warranty     : " + warranty + " Years");
+    }
+}
+
+
+class GroceryProduct extends Product {
+
+    private String expiryDate;
+
+    GroceryProduct(String productName, String productId,
+                   double price, String expiryDate) {
+
+        super(productName, productId, price);
+        this.expiryDate = expiryDate;
+    }
+
+    @Override
+    void displayDetails() {
+
+        System.out.println("===== GROCERY PRODUCT =====");
+
+        System.out.println("Product Name : " + productName);
+        System.out.println("Product ID   : " + productId);
+        System.out.println("Price        : " + price);
+        System.out.println("Expiry Date  : " + expiryDate);
+    }
+}
+
+
+public class ProductDemo {
+
+    public static void main(String[] args) {
+
+        ElectronicsProduct e =
+                new ElectronicsProduct("Laptop", "E101", 65000, 2);
+
+        GroceryProduct g =
+                new GroceryProduct("Breakfast Cereal",
+                                   "G205",
+                                   320,
+                                   "15-12-2026");
+
+        e.displayDetails();
+
+        System.out.println();
+
+        g.displayDetails();
+    }
+}
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+q3
+
+abstract class Course {
+
+    protected String courseCode;
+    protected String courseTitle;
+    protected int creditHours;
+
+    Course(String courseCode, String courseTitle, int creditHours) {
+
+        this.courseCode = courseCode;
+        this.courseTitle = courseTitle;
+        this.creditHours = creditHours;
+    }
+
+    abstract void displayDetails();
+}
+
+
+interface Assessment {
+
+    void assessmentType();
+}
+
+
+class TheoryCourse extends Course implements Assessment {
+
+    private String assessment;
+
+    TheoryCourse(String courseCode, String courseTitle,
+                 int creditHours, String assessment) {
+
+        super(courseCode, courseTitle, creditHours);
+        this.assessment = assessment;
+    }
+
+    @Override
+    void displayDetails() {
+
+        System.out.println("===== THEORY COURSE =====");
+
+        System.out.println("Course Code   : " + courseCode);
+        System.out.println("Course Title  : " + courseTitle);
+        System.out.println("Credit Hours  : " + creditHours);
+
+        assessmentType();
+    }
+
+    @Override
+    public void assessmentType() {
+
+        System.out.println("Assessment Type : " + assessment);
+    }
+}
+
+
+class LabCourse extends Course implements Assessment {
+
+    private int experiments;
+    private String assessment;
+
+    LabCourse(String courseCode, String courseTitle,
+              int creditHours, int experiments,
+              String assessment) {
+
+        super(courseCode, courseTitle, creditHours);
+        this.experiments = experiments;
+        this.assessment = assessment;
+    }
+
+    @Override
+    void displayDetails() {
+
+        System.out.println("===== LAB COURSE =====");
+
+        System.out.println("Course Code       : " + courseCode);
+        System.out.println("Course Title      : " + courseTitle);
+        System.out.println("No. of Experiments: " + experiments);
+
+        assessmentType();
+    }
+
+    @Override
+    public void assessmentType() {
+
+        System.out.println("Assessment Type   : " + assessment);
+    }
+}
+
+
+public class CourseDemo {
+
+    public static void main(String[] args) {
+
+        TheoryCourse theory =
+                new TheoryCourse(
+                    "CS301",
+                    "Data Structures",
+                    4,
+                    "Written Examination"
+                );
+
+        LabCourse lab =
+                new LabCourse(
+                    "CS351",
+                    "Java Programming Lab",
+                    2,
+                    12,
+                    "Practical Examination"
+                );
+
+        theory.displayDetails();
+
+        System.out.println();
+
+        lab.displayDetails();
+    }
+}
